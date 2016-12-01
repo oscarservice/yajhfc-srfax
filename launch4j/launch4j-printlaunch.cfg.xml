@@ -1,0 +1,36 @@
+<launch4jConfig>
+  <dontWrapJar>true</dontWrapJar>
+  <headerType>console</headerType>
+  <jar></jar>
+  <outfile>..\build\yajhfc-printlaunch.exe</outfile>
+  <priority>normal</priority>
+  <downloadUrl>http://java.com/download</downloadUrl>
+  <customProcName>false</customProcName>
+  <stayAlive>true</stayAlive>
+  <icon>yajhfc.ico</icon>
+  <classPath>
+    <mainClass>yajhfc.Launcher</mainClass>
+    <cp>%EXEDIR%\yajhfc.jar</cp>
+    <cp>%EXEDIR%\lib\*.jar</cp>
+  </classPath>
+  <jre>
+    <path>C:\Program Files\ojdkbuild\java-1.8.0-openjdk-1.8.0.102-2\jre</path>
+    <minVersion></minVersion>
+    <maxVersion></maxVersion>
+    <jdkPreference>jreOnly</jdkPreference>
+    <opt>-Duser.home=&quot;%USERPROFILE%&quot; -splash:logo-large.png</opt>
+  </jre>
+  <versionInfo>
+    <fileVersion>0.5.3.0</fileVersion>
+    <txtFileVersion>0.5.3beta</txtFileVersion>
+    <fileDescription>YajHFC Java fax printer launcher</fileDescription>
+    <copyright>(C) 2012 Jonas Wolz &lt;info@yajhfc.de&gt;</copyright>
+    <productVersion>0.5.3.0</productVersion>
+    <txtProductVersion>0.5.3beta</txtProductVersion>
+    <productName>Yet another Java HylaFAX client</productName>
+    <companyName></companyName>
+    <internalName>yajhfc-printlauncher</internalName>
+    <originalFilename>yajhfc-printlaunch.exe</originalFilename>
+  </versionInfo>
+  <customHeaderHook>launch4j/hook/bin/yajhfchook-printlaunch.o</customHeaderHook>
+</launch4jConfig>

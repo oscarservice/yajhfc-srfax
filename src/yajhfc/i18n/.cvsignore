@@ -1,0 +1,4 @@
+*.class
+*.mo
+*.properties
+.directory

@@ -1,0 +1,283 @@
+# This file contains message IDs to translate standard Java Swing dialogs
+msgid ""
+msgstr ""
+"Project-Id-Version: YajHFC 0.4.2\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Alexander Moisseev <moiseev@mezonplus.ru>\n"
+"Language-Team: RUSSIAN <moiseev@mezonplus.ru>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Russian\n"
+"X-Poedit-Country: RUSSIAN FEDERATION\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+# English text: "Details"
+msgid "FileChooser.detailsViewButtonAccessibleName"
+msgstr "Таблица"
+
+# English text: "{0} GB"
+msgid "FileChooser.fileSizeGigaBytes"
+msgstr "{0} ГБ"
+
+# English text: "{0} KB"
+msgid "FileChooser.fileSizeKiloBytes"
+msgstr "{0} КБ"
+
+# English text: "{0} MB"
+msgid "FileChooser.fileSizeMegaBytes"
+msgstr "{0} МБ"
+
+# English text: "Home"
+msgid "FileChooser.homeFolderAccessibleName"
+msgstr ""
+
+# English text: "List"
+msgid "FileChooser.listViewButtonAccessibleName"
+msgstr "Список"
+
+# English text: "New Folder"
+msgid "FileChooser.newFolderAccessibleName"
+msgstr "Новый каталог"
+
+# English text: ": "
+msgid "FileChooser.newFolderErrorSeparator"
+msgstr ""
+
+# English text: "NewFolder"
+msgid "FileChooser.other.newFolder"
+msgstr "НовыйКаталог"
+
+# English text: "NewFolder.{0}"
+msgid "FileChooser.other.newFolder.subsequent"
+msgstr "НовыйКаталог.{0}"
+
+# English text: "Up"
+msgid "FileChooser.upFolderAccessibleName"
+msgstr "Вверх"
+
+# English text: "View Menu"
+msgid "FileChooser.viewMenuButtonAccessibleName"
+msgstr ""
+
+# English text: "View Menu"
+msgid "FileChooser.viewMenuButtonToolTipText"
+msgstr ""
+
+# English text: "New Folder"
+msgid "FileChooser.win32.newFolder"
+msgstr "Новый каталог"
+
+# English text: "New Folder ({0})"
+msgid "FileChooser.win32.newFolder.subsequent"
+msgstr "Новый каталог ({0})"
+
+# English text: "All Files"
+#~ msgid "FileChooser.acceptAllFileFilterText"
+#~ msgstr "Все файлы"
+
+# English text: "Cancel"
+#~ msgid "FileChooser.cancelButtonText"
+#~ msgstr "Отмена"
+
+# English text: "Abort file chooser dialog"
+#~ msgid "FileChooser.cancelButtonToolTipText"
+#~ msgstr "Отменить выбор файла"
+
+# English text: "Delete File"
+#~ msgid "FileChooser.deleteFileButtonText"
+#~ msgstr "Удалить файл"
+
+# English text: "Details"
+#~ msgid "FileChooser.detailsViewActionLabelText"
+#~ msgstr "Таблица"
+
+# English text: "Details"
+#~ msgid "FileChooser.detailsViewButtonToolTipText"
+#~ msgstr "Таблица"
+
+# English text: "Directory"
+#~ msgid "FileChooser.directoryDescriptionText"
+#~ msgstr "Каталог"
+
+# English text: "Open"
+#~ msgid "FileChooser.directoryOpenButtonText"
+#~ msgstr "Открыть"
+
+# English text: "Open selected directory"
+#~ msgid "FileChooser.directoryOpenButtonToolTipText"
+#~ msgstr "Открыть выбранный каталог"
+
+# English text: "Enter file name:"
+#~ msgid "FileChooser.enterFileNameLabelText"
+#~ msgstr "Введите имя файла:"
+
+# English text: "Attributes"
+#~ msgid "FileChooser.fileAttrHeaderText"
+#~ msgstr "Свойства"
+
+# English text: "Modified"
+#~ msgid "FileChooser.fileDateHeaderText"
+#~ msgstr "Изменён"
+
+# English text: "Name"
+#~ msgid "FileChooser.fileNameHeaderText"
+#~ msgstr "Имя"
+
+# English text: "File Name:"
+#~ msgid "FileChooser.fileNameLabelText"
+#~ msgstr "Имя файла:"
+
+# English text: "Size"
+#~ msgid "FileChooser.fileSizeHeaderText"
+#~ msgstr "Размер"
+
+# English text: "Files"
+#~ msgid "FileChooser.filesLabelText"
+#~ msgstr "Файлы"
+
+# English text: "Files of Type:"
+#~ msgid "FileChooser.filesOfTypeLabelText"
+#~ msgstr "Файлы типа:"
+
+# English text: "Type"
+#~ msgid "FileChooser.fileTypeHeaderText"
+#~ msgstr "Тип"
+
+# English text: "Filter:"
+#~ msgid "FileChooser.filterLabelText"
+#~ msgstr "Фильтр:"
+
+# English text: "Folders"
+#~ msgid "FileChooser.foldersLabelText"
+#~ msgstr "Каталоги"
+
+# English text: "Help"
+#~ msgid "FileChooser.helpButtonText"
+#~ msgstr "Справка"
+
+# English text: "FileChooser help"
+#~ msgid "FileChooser.helpButtonToolTipText"
+#~ msgstr "Справочная информация о селекторе файлов"
+
+# English text: "List"
+#~ msgid "FileChooser.listViewActionLabelText"
+#~ msgstr "Список"
+
+# English text: "List"
+#~ msgid "FileChooser.listViewButtonToolTipText"
+#~ msgstr "Список"
+
+# English text: "Look In:"
+#~ msgid "FileChooser.lookInLabelText"
+#~ msgstr "Каталог:"
+
+# English text: "New Folder"
+#~ msgid "FileChooser.newFolderActionLabelText"
+#~ msgstr "Новый каталог"
+
+# English text: "New Folder"
+#~ msgid "FileChooser.newFolderButtonText"
+#~ msgstr "Новый каталог"
+
+# English text: "Folder name:"
+#~ msgid "FileChooser.newFolderDialogText"
+#~ msgstr "Имя каталога:"
+
+# English text: "Error creating new folder"
+#~ msgid "FileChooser.newFolderErrorText"
+#~ msgstr "Ошибка создания нового каталога"
+
+# English text: "Create New Folder"
+#~ msgid "FileChooser.newFolderToolTipText"
+#~ msgstr "Создать новый каталог"
+
+# English text: "Open"
+#~ msgid "FileChooser.openButtonText"
+#~ msgstr "Открыть"
+
+# English text: "Open selected file"
+#~ msgid "FileChooser.openButtonToolTipText"
+#~ msgstr "Открыть выбранный файл"
+
+# English text: "Open"
+#~ msgid "FileChooser.openDialogTitleText"
+#~ msgstr "Открыть"
+
+# English text: "Refresh"
+#~ msgid "FileChooser.refreshActionLabelText"
+#~ msgstr "Обновить"
+
+# English text: "Rename File"
+#~ msgid "FileChooser.renameFileButtonText"
+#~ msgstr "Переименовать файл"
+
+# English text: "Rename file "{0}" to"
+#~ msgid "FileChooser.renameFileDialogText"
+#~ msgstr "Переименовать файл \"{0}\" в"
+
+# English text: "Error renaming file "{0}" to "{1}""
+#~ msgid "FileChooser.renameFileErrorText"
+#~ msgstr "Ошибка переименования файла \"{0}\" в \"{1}\""
+
+# English text: "Error "
+#~ msgid "FileChooser.renameFileErrorTitle"
+#~ msgstr "Ошибка "
+
+# English text: "Save"
+#~ msgid "FileChooser.saveButtonText"
+#~ msgstr "Сохранить"
+
+# English text: "Save selected file"
+#~ msgid "FileChooser.saveButtonToolTipText"
+#~ msgstr "Сохранить выбранный файл"
+
+# English text: "Save"
+#~ msgid "FileChooser.saveDialogTitleText"
+#~ msgstr "Сохранить"
+
+# English text: "Save In:"
+#~ msgid "FileChooser.saveInLabelText"
+#~ msgstr "Сохранить в:"
+
+# English text: "Update"
+#~ msgid "FileChooser.updateButtonText"
+#~ msgstr "Обновить"
+
+# English text: "Update directory listing"
+#~ msgid "FileChooser.updateButtonToolTipText"
+#~ msgstr "Обновить каталог"
+
+# English text: "Up One Level"
+#~ msgid "FileChooser.upFolderToolTipText"
+#~ msgstr "На уровень выше"
+
+# English text: "View"
+#~ msgid "FileChooser.viewMenuLabelText"
+#~ msgstr "Вид"
+
+# English text: "Cancel"
+#~ msgid "OptionPane.cancelButtonText"
+#~ msgstr "Отмена"
+
+# English text: "Input"
+#~ msgid "OptionPane.inputDialogTitle"
+#~ msgstr "Ввод"
+
+# English text: "Message"
+#~ msgid "OptionPane.messageDialogTitle"
+#~ msgstr "Сообщение"
+
+# English text: "No"
+#~ msgid "OptionPane.noButtonText"
+#~ msgstr "Нет"
+
+# English text: "Select an Option"
+#~ msgid "OptionPane.titleText"
+#~ msgstr "Выберите вариант"
+
+# English text: "Yes"
+#~ msgid "OptionPane.yesButtonText"
+#~ msgstr "Да"

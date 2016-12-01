@@ -1,0 +1,448 @@
+\documentclass[a4paper,10pt]{scrartcl}
+\usepackage{ucs}
+\usepackage[utf8x]{inputenc}
+\usepackage{url}
+\usepackage[left=3cm,right=3cm,top=2cm,bottom=2cm,nohead]{geometry}
+\usepackage[colorlinks=false,pdfborder=0 0 0]{hyperref}
+\usepackage[T1]{fontenc}
+\usepackage[turkish]{babel}
+\usepackage{pslatex}
+
+%opening
+\title{YajHFC SSS}
+\author{}
+\date{}
+\begin{document}
+
+\sloppy
+\maketitle
+
+\tableofcontents
+
+\section{Kurulum}
+\subsection{Windows için faks görüntüleyici nereden temin edebilirim?}
+
+Bazıları faksları düşük çözünürlükte yanlış boyutlarda (yarısı) gösterse de 
+genellikle herhangi bir TIFF görüntüleyebilen yazılım kullanabilirsiniz.
+
+Neyse ki tüm yeni windows sürümleri bu işi doğru yapan programla beraber geliyorlar.
+
+\begin{description}
+\item[Windows 95/98/ME/2000:]
+Donatılar/Görüntüleme uygulamasını kullanabilirsiniz.
+	YajHFC ile kullanmak için diskinizdeki \texttt{kodakimg.exe}'i seçmek için 
+	\texttt{Faks görüntülüyeci için komut satırı}ndaki gözat düğmesini kullanın.\\
+	Bu genellikle Windows dizininde (win 98/ME) \emph{veya} \\
+\verb.Program Files\Windows NT\Accessories\ImageVue. dizininde bulunur. (win 2k). 
+       
+\item[Windows XP/Vista:]
+Birleşik ``resim ve faks görünütleyici'' kullanabilirsiniz
+	Kullanmak için aşağıdaki metini \texttt{Faks görüntüleyici için komut satırı} kutusuna girin:\\
+	\verb#rundll32.exe shimgvw.dll,ImageView_Fullscreen %s#
+ \end{description}
+
+      
+\subsection{Linux/*BSD/... için faks görünütüleyici nereden temin edebilirim?}
+\texttt{kfax} bende gayet iyi çalışıyor fakat windowsdaki gibi TIFF dosyalarını görüntüleyen
+her hangi bir yazılım kullanabilirsiniz, bu yazılımları dağıtımınızın paket yöneticisinden araştırabilirsiniz.
+
+
+\subsection{Mac OS X'de faks görüntüleyici olarak ne kullanmalıyım?}
+\texttt{Faks görüntüleyici için komut satırı} kutusuna sadece \verb.open %s. girmeniz yeterli.
+Fakslar öntanımlı uyguluma ile açılacaktır.
+Scott Harris'a bu çözüm için teşekkürler.
+
+\subsection{PostScript görüntüleyici nerden bulabilirim?}
+\begin{description}
+\item[Linux/*BSD/...:] Sadece PostScript görüntüleyici pkaetlerden birini kurun.
+		(örn. \texttt{gv, kghostview, gnome-gv, ...})
+
+
+\end{description}
+
+\subsection{GhostScript nereden temin edebilirim?}
+\begin{description}
+\item[Windows:] \url{http://www.cs.wisc.edu/~ghost/ adresinden indirebilirsiniz}
+\item[Linux/*BSD/...:] Dağıtımınız için GhostScript paketini kurun (Çoğu dağıtımda bu paket zaten kurulu gelir; Eğer kurulu değilse: paket adı genellikle \texttt{ghostscript} veya \texttt{gs} ile başlar)
+\end{description}
+
+\subsection{TIFF2PDF'yi nereden temin edebilirim?}
+\begin{description}
+\item[Windows:] \url{http://gnuwin32.sourceforge.net/downlinks/tiff.php}\\ adresinden indirebilirsiniz. Bu adres işe yaramazsa, lütfen \url{http://gnuwin32.sourceforge.net/packages/tiff.htm} veya \url{http://www.libtiff.org/} adreslerine bakın.
+\item[Linux/*BSD/...:] libtiff tools paketini dağımıtımıza kurun. Genellikle bu paket \texttt{tiff} kelimesini adının içinde barındırır. (Debian/Ubuntu için, \texttt{libtiff-tools} diye adlandırılır ve SUSE için \texttt{tiff}).
+\end{description}
+
+\subsection{How can I supply already downloaded versions of tiff2pdf and GhostScript to the Windows setup?}
+
+Starting with version 0.4.2 the Windows setup optionally downloads and installs tiff2pdf and GhostScript.
+Before starting a download the setup program searches in the following places for already downloaded versions:
+\begin{enumerate}
+ \item The directory where the \texttt{setup.exe} resides
+ \item The user's desktop (where the files are saved if you choose to preserve downloaded files)
+\end{enumerate}
+
+Please note that the file names must exactly match the ones of the downloaded files (i.e. \texttt{gs864w32.exe} (32 bit) or \texttt{gs864w64.exe} (64 bit) and \texttt{tiff-3.8.2-1.exe}).
+
+\section{Program kullanımı}
+
+\subsection{PostScript kapak sayfası şablonunu nasıl düzenleyebilirim?}
+O şablonlar HylaFAX \texttt{faxcover} programının kullandığı aynı özel PostScript biçimini kullanmalı.
+Bu tür dosyların nasıl oluşturulacağı ve düzenleneceğine dair ipucları için aşağıdaki safyalara bakabilirsiniz:
+\url{http://www.hylafax.org/HylaFAQ/Q202.html}\\
+\url{http://www.hylafax.org/howto/tweaking.html}\\
+
+Seçenek olarak, YajHFC 0.3.7 sürümünden itibaren, kapak sayfalarını, HTML yada bir eklenti ile XSL:FO veya ODT (OpenDocument Text) biçiminde kullanabilirsiniz.
+
+ \subsection{Bir HTML kapak sayfasında hangi alanlar tanınır}
+Bir HTML kapak sayfası kullanılırken, aşağıdaki ``kelimeler'' karşılığı olan değerlerle değiştirilir (büyük/küçük harf duyarlı):
+
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+\bfseries Kelime & \bfseries Anlamı \\
+\hline\hline
+\ttfamily @@Name@@ & Alıcı adı \\\hline
+\ttfamily @@Location@@ & Alıcı yeri (adresi) \\\hline
+\ttfamily @@Company@@ & Alıcı şirketi \\\hline
+\ttfamily @@Faxnumber@@ & Alıcı faks numarası \\\hline
+\ttfamily @@Voicenumber@@ & Alıcı telefon numarası \\\hline
+\ttfamily @@FromName@@ & Gönderen adı \\\hline
+\ttfamily @@FromLocation@@ & Gönderen yeri (adresi) \\\hline
+\ttfamily @@FromCompany@@ & Gönderen şirketi \\\hline
+\ttfamily @@FromFaxnumber@@ & Gönderen faks numarası \\\hline
+\ttfamily @@FromVoicenumber@@ & Gönderen telefon numarası \\\hline
+\ttfamily @@FromEMail@@ & Gönderen email adresi \\\hline
+\ttfamily @@Subject@@ & Faksın konusu \\\hline
+\ttfamily @@Date@@ & Bugünün tarihi \\\hline
+\ttfamily @@PageCount@@ & Kapak sayfası hariç faks sayfa adedi \\\hline
+\ttfamily @@Comments@@ & Bu faks için girilen yorumlar \\\hline
+\end{tabular}
+\end{center}
+
+0.4.0 sürümü ile başlayarak aşağıdaki ek alanlar kullanılabilir (dikkate alın ki \textit{italic} ``faksı tekrar gönder'' kullandığınızda bu alanlar boş olacaktır):
+\begin{center}
+\begin{tabular}{|l|p{.7\textwidth}|}
+\hline
+\bfseries Kelime & \bfseries Anlamı \\
+\hline\hline
+\ttfamily @@Surname@@ & Alıcı soyadı (faksı tekrar gönderme: \texttt{@@Name@@}) ile aynıdır \\\hline
+\ttfamily\itshape @@GivenName@@ & Alıcıya verilen ad \\\hline
+\ttfamily\itshape @@Title@@ & Alıcı başlığı \\\hline
+\ttfamily\itshape @@Position@@ & Alıcının görevi \\\hline
+\ttfamily\itshape @@Department@@ & Alıcının bölümü \\\hline
+\ttfamily @@CompanyName@@ & Alıcının şirket adı (bölüm hariç) (tekrar faks gönderme: \texttt{@@Company@@}) ile aynıdır\\\hline
+\ttfamily\itshape @@Street@@ & Alıcı cadde adı \\\hline
+\ttfamily @@Place@@ & Alıcının konumu (cadde yada posta kodu olmadan) (tekrar faks gönderme: \texttt{@@Location@@}) ile aynıdır\\\hline
+\ttfamily\itshape @@ZIPCode@@ & Alıcı posta kodu \\\hline
+\ttfamily\itshape @@State@@ & Alıcı bölgesi \\\hline
+\ttfamily\itshape @@Country@@ & Alıcının ülkesi\\\hline
+\ttfamily\itshape @@EMail@@ & Alıcının e-posta adresi\\\hline
+\ttfamily\itshape @@WebSite@@ & Alıcının web sitesi\\\hline\hline
+\ttfamily @@FromSurname@@ & Gönderenin soyadı \\\hline
+\ttfamily @@FromGivenName@@ & Görene verilen ad \\\hline
+\ttfamily @@FromTitle@@ & Gönderenin başlığı \\\hline
+\ttfamily @@FromPosition@@ & Gönderenin görevi \\\hline
+\ttfamily @@FromDepartment@@ & Gönderenin bölümü\\\hline
+\ttfamily @@FromCompanyName@@ & Gönderenin şirket adı (bölüm olmadan)\\\hline
+\ttfamily @@FromStreet@@ & Gönderenin cadde adı \\\hline
+\ttfamily @@FromPlace@@ & Gönderenin yeri (cadde ve posta kodu olmadan)\\\hline
+\ttfamily @@FromZIPCode@@ & Gönderenin posta kodu \\\hline
+\ttfamily @@FromState@@ & Gönderenin bölgesi\\\hline
+\ttfamily @@FromCountry@@ & Gönderenin ülkesi\\\hline
+\ttfamily @@FromEMail@@ & Gönderen e-posta adresi\\\hline
+\ttfamily @@FromWebSite@@ & Gönderenin web sitesi\\\hline
+\ttfamily @@TotalPageCount@@ & Kapak sayfası \textit{dahil} sayfa sayısı\\\hline
+\ttfamily @@CCNameAndFax@@ & The names and fax numbers of the other recipients of this fax in the format \textit{Name1 <faxnumber1>; Name2 <faxnumber2>; ...} (versions > 0.4.4 only)\\\hline
+\end{tabular}
+\end{center}
+
+Bu değişimler kaynak kodu seviyesinde yapılır yani biçimleme, birisi içersinde yapılırsa bu kelimeler muhtemelen tanınmayacaktır. (örn. \texttt{@@sub\textit{ject@@}})
+
+Starting with version 0.4.2 some simple conditional statements are supported. These are implemented using HTML comments, so please make sure that the text enclosed in a conditional statement does not contain any comments.
+\begin{center}
+\begin{tabular}{|l|p{.5\textwidth}|}
+\hline
+\bfseries Word & \bfseries Meaning \\
+\hline\hline
+\ttfamily @@IfSomeFilled:\textit{field1,field2,...}@@ & Include the following text only if at least one of the given fields is filled (i.e. has a value with a length > 0).\\\hline
+\ttfamily @@IfAllFilled:\textit{field1,field2,...}@@ & Include the following text only if all of the given fields are filled (i.e. have a value with a length > 0).\\\hline
+\ttfamily @@IfSomeEmpty:\textit{field1,field2,...}@@ & Include the following text only if at least one of the given fields is empty (i.e. has a value with a length = 0).\\\hline
+\ttfamily @@IfAllEmpty:\textit{field1,field2,...}@@ & Include the following text only if all one of the given fields are empty (i.e. have a value with a length = 0).\\\hline
+\ttfamily @@Else@@ & Include the following text only if the last \texttt{@@If...@@}-Statement did not match.\\\hline
+\ttfamily @@EndIf@@ & Marks the end of the area influenced by the last if. Every \texttt{@@If...@@} must have exactly one corresponding \texttt{@@EndIf@@}.\\\hline
+\end{tabular}
+\end{center}
+
+\subsection{Where can I find the old default cover page used before version 0.4.2?}
+
+You can find it in the ``Coverpage examples'' archive at \url{ftp://ftp.berlios.de/pub/yajhfc/download/coverpages.zip}
+
+
+\subsection{Önceki iletiyi daha cok sevdim. Onu tekrar kullanabilir miyim?}
+
+Seçenekler iletişimini açın ve ``Gönderme iletişim tipi'' olarak \texttt{Geleneksel} seçin.
+
+\subsection{Telefon defterine JDBC üzerinden erişmek istiyorum ancak java çağrılırken doğru sınıf yolunu belirtmeme rağmen YajHFC sürücüyü bulamıyor.}
+
+\texttt{-jar} komut satırı değişkenini kullanırsanız, java kullanıcı tanımlı sınıf yolunu gözardı eder.
+Yani, lütfen YajHFC'yi aşağıdaki komutlarla başlatın (\texttt{/yol/dbdriver.jar} ve \texttt{/yol/yajhfc.jar}'ı elbette ilgili olan gerçek yol ve dosya adlarıyla değiştirin):
+
+\begin{description}
+\item [Linux/Unix:] \verb#java -classpath /yol/dbdriver.jar:/yol/yajhfc.jar yajhfc.Launcher#
+\item [Windows:] \verb#java -classpath c:\yol\dbdriver.jar;c:\yol\yajhfc.jar yajhfc.Launcher#
+\end{description}
+
+\subsection{Özel filtre iletişiminde \texttt{matches} işleç için ne değer girebilirim?}
+
+Düzenli İfadeler. Kabul edilen sözdizimi hakkında kısa bir başvuru kaynağı aşağıdadır:
+\url{http://java.sun.com/j2se/1.5.0/docs/api/java/util/regex/Pattern.html}
+
+Lütfen Düzenli İfadelerin joker karakterlerle aynı olmadığını dikkate alın:
+Örneğin, \verb.*. joker karakterinin etkili olması için \verb#.*# kullanmak zorundasınız 
+ve \verb#?# joker karakteri için \verb#.#.
+
+\subsection{YajHFC hangi komut satırı değişkenlerini anlıyor?}
+
+\begin{verbatim}
+Kullanım:
+java -jar yajhfc.jar [SEÇENEKLER]... [GIDECEK DOSYALAR]...
+
+Değişken açıklaması:
+-r, --recipient=ALICI             Faks gönderilecek alıcıyı tanımlar. Bir faks
+                                  numarası yada ayrıntılı kapak sayfası bilgisi
+                                  tanımlayabilirsiniz (En son durumdaki biçim
+                                  için SSS'ye göz atın. Bir çok alıcı için bir
+                                  çok kez tanımlama yapabilirsiniz.
+-C, --use-cover[=yes|no]          Faks göndermek için bir kapak sayfası kullan.
+-s, --subject=KONU                Kapak sayfası için faks konusu.
+    --comment=YORUM               Kapak sayfası için yorum.
+    --stdin                       Dosya göndermek için standart girişten oku.
+-A, --admin                       Yönetici kipinde başlat.
+-d, --debug                       Bazı hata giderme bilgileri çıkarır.
+-l, --logfile=GÜNLÜKDOSYASI       Hata giderme bilgisini yazdırmak için
+                                  kullanılacak günlük dosyası (eğer
+                                  tanımlanmazsa stdout kullan).
+    --appendlogfile=GÜNLÜKDOSYASI Verilen günlük dosyasına hata giderme
+                                  bilgisini ekle.
+    --background                  Çalışan YajHFC kopyası yoksa, yeni bir kopya
+                                  çalıştır ve (faksı göndermek için ilettikten
+                                  sonra) bu kopyayı sonlandır.
+    --noclose                     Faks iletiminden sonra YajHFC'yi kapatma.
+    --no-wait                     Gönder penceresinin kullanıcı tarafından
+                                  kapatılmasını bekleme. Eğer YajHFC, kullanıcı
+                                  pencereyi kapatmadan önce birden çok defa
+                                  çalıştırılmışsa, gönderilen belge ordaki
+                                  dosya listesine eklenir. Seçenek
+                                  --bakckground işlemini kapsar.
+-T, --showtab=0|R|1|S|2|T         Açılışta gösterilecek sekmeyi ayarlar.
+                                  "Gelen" için 0 veya R, "Giden" için 1 veya S,
+                                  "İletiliyor" için 2 veya T tanımlayın.
+    --loadplugin=JARDOSYASI       Yüklenecek YajHFC eklenti jar dosyası
+                                  tanımla.
+    --loaddriver=JARDOSYASI       Yüklenecek JDBC sürücü JAR dosyasının yerini
+                                  tanımlar.
+    --no-plugins                  Eklenti .lst dosyasındaki eklentilerin
+                                  yüklemesini devre dışı bırak.
+    --no-gui                      Faksı sadece en düşük GUI ile gönder.
+    --no-check                    Açılışta Java sürüm kontrolünü kaldır.
+-c, --configdir=KLASÖR            ~/.yajhfc yerine başka bir ayar klasörü
+                                  kullan.
+-h, --help[=DESTEK]               Bu metni görüntüler.
+\end{verbatim}
+
+
+
+
+\subsection{ \texttt{-{-}recipient} anahtarını kullanarak nasıl kapak sayfası bilgisi verebilirim?}
+
+Sürüm 0.4.0 ile başlayarak, noktalı virgülle ayrılmış ikiliyi \texttt{ad:değer} kullanarak bu bilgiyi verebilirsiniz.
+Örneğin faks numarası 0123456 olan, ``A şehri''ndeki ``Mehmet Faksbekler''e faks göndermek için, aşağıdaki komut satırını kullanabilirsiniz:
+
+\texttt{java -jar yajhfc.jar \textit{[...]} -{-}recipient="VerilenAd:Mehtmet;Soyad:Faksbekler;Yer:A şehri;Faksnumarası:0123456" \textit{[...]}}
+
+Aşağıdaki alan adlerı geçerlidir:
+\begin{center}
+\begin{tabular}{|l|p{.7\textwidth}|}
+\hline
+\bfseries Alan adı & \bfseries Anlamı \\
+\hline\hline
+\ttfamily surname & Alıcı soyadı\\\hline
+\ttfamily givenname & Alıcıya verilen ad \\\hline
+\ttfamily title & Alıcı başlığı \\\hline
+\ttfamily position & Alıcının görevi \\\hline
+\ttfamily department & Alıcının bölümü\\\hline
+\ttfamily company & Alıcı şirket adı\\\hline
+\ttfamily street & Alıcı cadde adı \\\hline
+\ttfamily location & Alıcının yeri\\\hline
+\ttfamily zipcode & Alıcı posta kodu \\\hline
+\ttfamily state & Alıcının bölgesi\\\hline
+\ttfamily country & Alıcının ülkesi\\\hline
+\ttfamily email & Alıcının e-posta adresi\\\hline
+\ttfamily faxnumber & Alıcının faks numarası \\\hline
+\ttfamily voicenumber & Alıcının telefon numarası \\\hline
+\ttfamily website & Alıcının web sitesi\\\hline
+\end{tabular}
+\end{center}
+
+\subsection{XYZ sütunun anlamı nedir?}
+
+Ben de tam olarak bilmiyorum çünkü sütun açıklamarı 
+tamamen \verb.faxstat(1). kullanma klavuzundan (JobFmt/RcvFmt) kopyalanmıştır
+ve kısaltılmıştır/çevirilmiştir. 
+
+\subsection{Bazı öntanımlı değerleri nasıl tanımlayabilirim?}
+
+Sürüm 0.4.0 ile başlayarak, kaydedilmiş ayarları getirmek için aşağıdaki dosyalar (varsa) yüklenir:
+\begin{enumerate}
+ \item \texttt{[yajhfc.jar dosyasının olduğu klasör]/settings.default}
+ \item \texttt{\{user.home\}\footnote{Windows'da \texttt{user.home} genelde \texttt{C:\textbackslash Documents and Settings\textbackslash KullanıcıAdı klasörüdür}.}/.yajhfc/settings} klasöründen kullanıcı ayarları, (eğer \texttt{-{-}configdir=DIR} belirtirseniz, \texttt{DIR/settings} kullanılacaktır)
+ \item \texttt{[yajhfc.jar dosyasının olduğu klasör]/settings.override}
+\end{enumerate}
+
+Daha sonra okunan dosyadaki ayarlar, önceden okunan dosyadaki ayarların üzerine yazar. Örn. \texttt{settings.override} dosyası, \texttt{settings.default} ve kullanıcı ayar dosyasından baskındır.
+\medskip
+
+Bu mantık, öntanımlı ayarları belirtmek için kullanılabilir (örn. bir ağ ortamında):
+Basitçe bir YajHFC kurulumunu istediğiniz gibi ayarlayın sonra \texttt{\{user.home\}/.yajhfc/settings} dosyasını, \texttt{yajhfc.jar} dosyasının bulunduğu klasöre kopyalayın ve adını \texttt{settings.default} olarak değiştirin.
+\medskip
+
+Üzerine yazma, benzer bir şekilde tanımlanabilir. Bu durumda, ayar dosyasını (düz metin dosyası) düzenlemeye ve üzerine yazmasını istemediğiniz ayarları tanımlayan satırları silmeye teşvik edilirsiniz.(en azından \texttt{user} ve \texttt{pass-obfuscated} (kullanıcı adı ve parola HylaFAX sunucuya bağlanmak için kullanılır), \texttt{FromName}, \texttt{*ColState} (tablo sütunları genişliği), \texttt{*Bounds} (Değişik pencelerin yerleri) ve \texttt{mainwinLastTab} değerlerini silmek isteyebilirsiniz).
+
+Bununla birlikte çalışan bir YajHFC uygulamasında, kullanıcı hala bu ayarları farklı değerlere atayabileceğini dikkate alın.
+Sadece YajHFC tekrar çalıştırıldığında bu değerler sıfırlanır (Başka bir deyişle: Kullanıcı ayarları değiştirebilir fakat YajHFC'yi kapattığında bunlar kaydedilmez).
+
+\subsection{HylaFAX \texttt{archive} klasörünü, YajHFC içerisinde nasıl görebilirim?}
+
+Sürüm 0.4.0 ile beraber HylaFAX \texttt{archive} dizin desteği uygulanmıştır.
+
+Bu klasöre, diğer klasörlerde olduğu gibi "`alışılagelmiş"' HylaFAX bağlantısı ile erişilemez. Çünkü HylaFAX sadece 
+\texttt{archive} klasörünün alt klasör listesinin alınmasına izin verir ancak (ID hariç) arşivlenmiş işlemler veya eklenen belgeler hakkında herhangi bir bilgi alınmasına izin vermez (eğer bunun farklı olduğu bir HylaFAX sürümü biliyorsanız, Lütfen bana bildirin).
+
+Bu sebepten dolayı klasöre başka yöntemlerle erişilmek zorundadır. Şu anki (0.4.0) YajHFC sadece dosya sistemi kullanarak erişimi desteklemektedir. Bu, sunucudaki \texttt{archive} klasörünü Samba, NFS veya başka ağ dosya sistemi kullanarak erişime açmak zorunda olduğunuz anlamına gelir. İstemciden buunu bağlayın (eğer Unix kullanıyorsanız; Windows üzerinde, sadece UNC yolunu kullanabilirsiniz) ve YajHFC seçenekler bölümünden \texttt{archive} klasörünün bulunduğu yolu girebilirsiniz.
+
+Bunu yaptıktan sonra, arşiv tablosu, diğer tabloların çalıştığı gibi çalışacaktır.
+
+\subsection{\texttt{Yollar \& Görüntülüyeciler -> Görünüm ve gönderim ayarları} altındaki farklı seçenekler ne yapar (0.4 ve üstü)?}
+
+Sabırsızlar için: Tavsiye edilen ayarlar (öntanımlı değil çünkü \texttt{gs} ve \texttt{tiff2pdf} gerektiriyor):
+\begin{itemize}
+ \item \textbf{Biçim:} PDF veya TIFF
+ \item \textbf{Çoklu dosya farklı gönder:} Kapak hariç tek dosya
+ \item \textbf{Tek dosya olarak görüntüle:} Evet
+ \item \textbf{Herzaman bu biçimde görüntüle/gönder:} Evet
+\end{itemize}
+
+\subsubsection{Görüntüleme/gönderme biçimi}
+
+Gerekli ise belgenin dönüştürüleceği biçim. Genelde, burda PDF ve TIFF, PostScript'ten daha iyi sonuç verir (Sonuncusu GhostScript'in \texttt{pswrite} aygıtını kullanır).
+
+\subsubsection{Çoklu dosyaları farklı gönder}
+
+{\parindent0pt
+\textbf{Çoklu dosyalar:}\\
+0.4.0 öncesi sürümlerle aynı davranış. Eğer birden fazla belgeleyi tek bir faks işelemine eklerseniz, bu belgeler PS veya PDF'ye dönüştürülür fakat ayrı dosyalar halinde korunur (örn. eğer \texttt{belge.ps} ve \texttt{resim.jpg} dosyaları ile bir faks gönderirseniz, iki ayrı dosya karşıya yüklenir).
+\medskip
+
+\textbf{Kapak hariç olmak üzere tek dosya:}\\
+Tüm faks için tek dosya oluşturulur fakat kapak dosyası ayrı dosya olarak tutulur (örn. {belge.ps} ve \texttt{resim.jpg} dosyaları ile bir faks gönderirseniz, tek bir PDF/PS/TIFF dosyası oluşturulur ve karşıya yüklenir).\\
+\textit{Yararı:} Çözünürlük 196dpi olarak düşürülür. (-> daha küçük dosya/karşıya yükleme) Ve çoklu hedefe bir faks gönderirken, tek bir belge dosyası kullanılabilir.
+\medskip
+
+\textbf{Faksı tek dosya olarak bütünle:}\\
+Kapak sayfası dahil tüm faks için tek dosya oluşturulur. Faksın kapak sayfası olmazsa, adı geçen durumla aynı davranır.\\
+\textit{Yararı:} Giden faksı görüntülerken istemci tarafında dönüştürme olmaz.\\
+\textit{Sakıncası:} Birden fazla alıcıya faks gönderirken, her alıcı için bir dosya oluşturulup kaşıya yüklenmek zorunda.
+}
+
+\subsubsection{Faksları tek dosya olarak görüntüle}
+Eğer bu seçenek işaretlenirse ve sunucu üzerinde bir faks birden fazla dosyadan oluşuyorsa, (istemci tarafında) görüntüleme için tek bir dosya oluşturulur.
+
+
+\subsubsection{Faksları herzaman bu biçimde görüntüle/gönder}
+Bu seçenek, ``Çoklu dosyaları farklı gönder'' ve ``Faksları tek dosya olarak görüntüle'' davranışlarını değiştirir.\\
+Bu seçenek \textit{işaretlenmediğinde}, çoklu dosyadan oluşuyorsa, faks dönüşütürülür. Eğer tek dosyadan meydana geliyorsa, Bu biçim olduğu gibi kalır.\\
+Bu seçenek \textit{işaretlendiğinde}, içerdiği bu tek dosya ``gönderme/görüntüleme biçimi'' olarak seçilen biçimden farklı bir biçime sahip olduğunda, faks tek dosyadan meydana gelse de dönüştülür.\\
+\textit{Yararı:} Giden ve gelen faksları görüntülemek tek görünütüleyici kullanılır (örn. Gelen faksları PDF olarak görüntülemek için).\\
+\textit{Sakıncası:} Genelde istemci tarafında daha fazla biçim dönüşümü gerekir.
+
+\subsection{Tatih/zaman biçimi olarak hangi karakterler tanınır?}
+
+Tarih, Java \texttt{SimpleDateFormat} kullanılarak biçimlendirilmiştir. Tanımlı karakterler açıklaması \url{http://java.sun.com/j2se/1.5.0/docs/api/java/text/SimpleDateFormat.html} adresinden bulunabilir.
+
+\subsection{What does the \texttt{Answer call} feature do?}
+
+The same as the HylaFAX \verb#faxanswer# command: It instructs the HylaFAX server to try answering an incoming call on the given modem even if the modem normally ignores inbound calls. This can be useful for testing or for small installations where a modem shares the line with a normal telephone.
+
+\section{Sorunlar/Bilinen hatalar}
+
+\subsection{Bir HTML belge kapak sayfası oluşturdum fakat YajHFC'de biçim yanlış görünüyor!}
+
+YajHFC, HTML'yi PostScripte çevirmek için Java (\texttt{HTMLEditorKit} / \texttt{HTMLDocument}) içersindeki birleşik HTML desteğini kullanır. Bu destek oldukça kısıtlıdır ki özellikle yanlız HTML 3.2'yi destekler.\\
+Bunun anlamı karmaşık düzenler genelde YajHFC içinde doğru işlenmez.
+İstediğiniz düzeni başarmak için aşağıdaki seçenekler mevcut:
+
+\begin{itemize}
+ \item Düzen doğru görünene kadar deneme yanılma yöntemini kullanabilirsiniz (Gönder iletisindeki önizleme düğmesi dönüştürülmüş HTML düzenini gösterecektir.)
+ \item Başka bir kapak sayfası biçimi kullanabilirsiniz (XSL:FO veya FOP eklentisi ile ODT gibi)
+\end{itemize}
+
+\subsection{Faksları görüntülemeye çalıştığımda, bütün belgeler PostScript/PDF olmasına rağmen daima 
+   \texttt{PCL dosya biçimi desteklenmiyor} hatası alıyorum.}
+
+Seçenekler iletişimindeki \texttt{PCL dosya türü hata düzeltme kullan} onay kutusunu işaretleyin ve tekrar deneyin.
+
+Bazı HylaFAX sürümleri, hatalı olarak, bir işlem ile ilgili tüm belgeler için
+``PCL'' dosya türü bildirir. Eğer bu onay kutusu işaretlenirse, YajHFC, 
+PCL dosya türü bildirildiğinde dosya türünü tahmin etmeye calışır (genellikle gayet iyi çalışır). 
+
+
+\subsection{Bir yada birden fazla faksı bir dizide gönderdiğimde sık sık hata alıyorum. Bununla ilgili ne yapabilirim?}
+
+HylaFAX sunucuların bazı sürümlerinde oturum başına birden fazla faks gönderildiğinde bu sorun oluşuyor gibi görünüyor.
+
+Bu sorunu çözmek için Seçenekler iletişimindeki \texttt{Sunucu} sekmesine gidin, \texttt{Tüm işlemler için yeni oturum aç} kutusunu işaterleyin ve sorunun devam edip etmediğini deneyin.
+İşe yaramazsa, lütfen hatayı bana mail atın.
+
+\subsection{Windows altında çalışan YajHFC bazen kendi ayarlarını \texttt{C:\textbackslash Documents and Settings\textbackslash KULLANICIADI\textbackslash .yajhfc} yerine \texttt{C:\textbackslash .yajhfc} içerisine kaydediyor}
+
+Öntanımlı olarak YajHFC kendi ayarlarını Java sistem özellikleri \texttt{user.home} tarafından döndürülen dizinin 
+\texttt{.yajhfc} altdizini içersine kaydeder.
+Bazen bazı Java sürümlerinde bu özellik doğru ayarlanmamış gibi görünüyor.
+
+Çözüm olarak, YajHFC'yi Java'nın \texttt{-D} komut satırı anahtarı kullanarak başlatırken, bu özelliği ayarlayabilirsiniz. Örneğin: \\
+\texttt{java -Duser.home=\%USERPROFILE\% -jar "C:\textbackslash Program Files\textbackslash yajhfc.jar"}
+
+\subsection{Sistem çekmecesi simgesi görünmüyor!}
+
+Sürüm 0.4.0 ile başlayarak YajHFC, Java 1.6 (``Java 6'') altında çalışırken sistem çekmecesi simgesini destekler. Eğer Java 1.5 (``Java 5'') kullanıyorsanız, bu simge desteklenmez.
+
+Lütfen Java 1.6'nın kurulu olduğundan emin olun. Eğer kesinlikle Java 1.6'nın kurulu olduğundan eminseniz ve hala simge görünmüyorsa, lütfen bana hata raporunu mail atın.
+
+\section{Diğer}
+
+\subsection{Neden parolalar şifresiz olarak kaydediliyor?}
+
+Çünkü daha iyi bir yöntem yok.
+
+YajHFC bir şekilde kaydetmeden önce kodlayabilirdi/``şifreleyebilirdi'' fakat
+bunu yapsaydım, herzaman şifreyi çözmek için kaynak koda bakabilirdiniz 
+(YajHFC kaynak kodu kapalı olsa dahi hala kaynak koda dönüştürebilir 
+yada bunu yapmak için denemeler yapabilirdiniz).
+
+Tek güvenli yöntem, YajHFC'yi çalıştırdığınızda her zaman sizden ana parolayı 
+istemesidir, fakat benim fikrime göre bu, ``gerçek'' parolayı girmenin ötesinde
+bir gelişme sağlamayacaktır.
+
+Bir çok istek nedeniyle, 0.4.0 ve üstü sürümlerde, parolalar sabit bir algoritma kullanarak gizlenmiştir.
+Lakin yukarıda belirtilen durum hala doğrudur. örn. bir kez kaynak kodu okuyarak parolalar kolaylıkla çözülebilir.
+
+\subsection{Neden böyle aptal bir isim seçtiniz?}
+
+YajHFC, java ve \texttt{gnu.hylafax} kütüphaneleri için bir deneme projesi olarak başladı
+yani ``güzel'' bir isime sahip değildi. Bir süre üzerinde çalıştıktan sonra 
+gerçekten kullanılabilir bir duruma geldiğini farkettim ve bu ismi seçtim. 
+Çünkü o sıralarda aynı zamanda SuSe'nin yast'ı ile de oynuyordum ve bir çok java hylaFAX istemcisi 
+olduğunu biliyordum. Kısaca şöyle adlandırdım:
+``\textbf{y}et \textbf{a}nother \textbf{J}ava \textbf{H}ylaFAX \textbf{c}lient''
+
+\end{document}

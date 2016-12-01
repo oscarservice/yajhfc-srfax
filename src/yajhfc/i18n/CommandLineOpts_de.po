@@ -1,0 +1,230 @@
+# translation of CommandLineOpts_de.po to Deutsch
+# Jonas Wolz <jwolz@freenet.de>, 2008, 2009, 2010, 2011.
+# Help texts for the command line.
+# Messages ending in -desc contain descriptions of the arguments,
+# while those ending in -arg contain the description of parameter to the argument
+msgid ""
+msgstr ""
+"Project-Id-Version: CommandLineOpts_de\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2012-01-03 09:48+0100\n"
+"Last-Translator: Jonas Wolz <jonas.wolz@freenet.de>\n"
+"Language-Team: Deutsch <de@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+
+# Untranslated text: Usage
+msgid "usage"
+msgstr "Aufruf"
+
+# Untranslated text: Argument description
+msgid "argument-description"
+msgstr "Argumentbeschreibung"
+
+# Untranslated text: OPTIONS
+msgid "options"
+msgstr "OPTIONEN"
+
+# Untranslated text: FILES TO SEND
+msgid "files-to-send"
+msgstr "ZU SENDENDE DATEIEN"
+
+# Untranslated text: RECIPIENT
+msgid "recipient-arg"
+msgstr "EMPFÄNGER"
+
+# Untranslated text: Specifies a recipient to send the fax to. You may specify either a fax number or detailed cover page information (see the FAQ for the format in the latter case). You may specify --recipient multiple times for multiple recipients.
+msgid "recipient-desc"
+msgstr ""
+"Gibt einen Faxempfänger an. Sie können entweder eine Faxnummer oder "
+"detaillierte Deckblattinformationen angeben (siehe die FAQ für das Format im "
+"letzteren Fall). Sie können --recipient mehrmals angeben für mehrere "
+"Empfänger."
+
+# Untranslated text: Extract recipients from the specified files or stdin by searching for @@recipient:<faxnumber>@@ tags.
+msgid "extract-recipients-desc"
+msgstr ""
+"Extrahiert Empfänger aus den angegebenen Dokumenten oder der "
+"Standardeingabe, indem nach @@recipient: <Faxnummer>@@ gesucht wird."
+
+# Untranslated text: Use a cover page for sending a fax.
+msgid "use-cover-desc"
+msgstr "Benutze ein Deckblatt beim Versendes des Faxes."
+
+# Untranslated text: SUBJECT
+msgid "subject-arg"
+msgstr "BETREFF"
+
+# Untranslated text: The fax subject for the cover page.
+msgid "subject-desc"
+msgstr "Der Betreff des Faxes für das Deckblatt."
+
+# Untranslated text: COMMENT
+msgid "comment-arg"
+msgstr "KOMMENTAR"
+
+# Untranslated text: The comment for the cover page.
+msgid "comment-desc"
+msgstr "Der Kommentar für das Deckblatt."
+
+# Untranslated text: Read the file to send from standard input.
+msgid "stdin-desc"
+msgstr "Lese die zu sendende Datei von der Standardeingabe."
+
+# Untranslated text: Start up in admin mode.
+msgid "admin-desc"
+msgstr "Starte im Admin-Modus."
+
+# Untranslated text: Output some debugging information.
+msgid "debug-desc"
+msgstr "Gib einige Debugging-Informationen aus."
+
+# Untranslated text: LOGFILE
+msgid "logfile-arg"
+msgstr "LOGDATEI"
+
+# Untranslated text: The log file to log debug information to (if not specified, use stdout).
+msgid "logfile-desc"
+msgstr ""
+"Die Logdatei, in die die Debugginginformationen ausgeben (falls nicht "
+"angegeben, benutze die Standardausgabe)."
+
+# Untranslated text: LOGFILE
+msgid "appendlogfile-arg"
+msgstr "LOGDATEI"
+
+# Untranslated text: Append debug information to the given log file.
+msgid "appendlogfile-desc"
+msgstr "Hänge die Debugginginformationen an die angegebene Logdatei an."
+
+# Untranslated text: If there is no already running instance of YajHFC, launch a new instance and terminate this instance (after submitting the fax to send).
+msgid "background-desc"
+msgstr ""
+"Falls noch keine Instanz von YajHFC läuft, erstelle eine neue Instanz und "
+"beende diese Instanz (nachdem das zu sendende Fax abgeschickt wurde)"
+
+# Untranslated text: Do not close YajHFC after submitting the fax.
+msgid "noclose-desc"
+msgstr "YajHFC nach Absenden des Faxes nicht schließen."
+
+# Untranslated text: Sets the tab to display on startup. Specify 0 or R for the "Received", 1 or S for the "Sent" or 2 or T for the "Transmitting" tab.
+msgid "showtab-desc"
+msgstr ""
+"Setzt den beim Start anzuzeigenden Tab. Geben Sie 0 oder R für den Tab "
+"\"Empfangen\", 1 oder S für \"Gesendet\" oder 2 oder T für \"Sendend\" an."
+
+# Untranslated text: JARFILE
+msgid "loadplugin-arg"
+msgstr "JARDATEI"
+
+# Untranslated text: Specifies a jar file of a YajHFC plugin to load.
+msgid "loadplugin-desc"
+msgstr "Gibt die JAR-Datei eines zu ladenden YajHFC-Plugins an."
+
+# Untranslated text: JARFILE
+msgid "loaddriver-arg"
+msgstr "JARDATEI"
+
+# Untranslated text: Specifies the location of a JDBC driver JAR file to load.
+msgid "loaddriver-desc"
+msgstr "Gibt die JAR-Datei eines zu ladenden JDBC-Treibers an."
+
+# Untranslated text: Disables loading plugins from the plugin.lst file.
+msgid "no-plugins-desc"
+msgstr "Deaktiviert das Laden von Plugins aus der plugin.lst-Datei."
+
+# Untranslated text: Sends a fax with only a minimal GUI.
+msgid "no-gui-desc"
+msgstr "Sende ein Fax mit einer nur minimalen graphischen Oberfläche."
+
+# Untranslated text: DIRECTORY
+msgid "configdir-arg"
+msgstr "VERZEICHNIS"
+
+# Untranslated text: Sets the configuration directory to use instead of ~/.yajhfc
+msgid "configdir-desc"
+msgstr ""
+"Setzt ein anstatt von ~/.yajhfc zu verwendendes Konfigurationsverzeichnis."
+
+# Untranslated text: COLUMNS
+msgid "help-arg"
+msgstr "SPALTEN"
+
+# Untranslated text: Displays this text.
+msgid "help-desc"
+msgstr "Zeigt diesen Text (ggf. formatiert für SPALTEN Spalten) an."
+
+# Untranslated text: Do not check for the Java version at startup.
+msgid "no-check-desc"
+msgstr "Unterdrückt die Prüfung der Javaversion beim Start."
+
+# Untranslated text: Do not wait for the send window to be closed by the user. If YajHFC is invoked multiple times before the user closes the send window, the submitted documents are added to the list of files there. This option implies --background.
+msgid "no-wait-desc"
+msgstr ""
+"Warte nicht darauf, dass der Sendedialog geschlossen wird. Wenn YajHFC "
+"mehrfach aufgerufen wird, bevor der Benutzer den Sendedialog schließt, "
+"werden die angegebenen Dokumente zur Liste der Dateien hinzugefügt. Diese "
+"Option impliziert --background."
+
+# Untranslated text: Sets the initial window state of the main window to _N_ormal, _M_aximized, _I_conified (minimized) or minimized to _T_ray.
+msgid "windowstate-desc"
+msgstr ""
+"Setzt den anfänglichen Status des Hauptfensters auf _N_ormal, _M_aximiert, "
+"als _I_con (minimiert) oder minimiert in die System-_T_ray."
+
+# Untranslated text: MODEM
+msgid "modem-arg"
+msgstr "MODEM"
+
+# Untranslated text: Sets the modem to send the fax. Specify either the modem's name (e.g. ttyS0) or \"any\" to use any modem.
+msgid "modem-desc"
+msgstr ""
+"Setzt das zum Senden des Faxes zu verwendende Modem. Geben Sie entweder den "
+"Namen des Modems (z.B. ttyS0) an oder \"any\", um ein beliebiges Modem zu "
+"verwenden."
+
+# Untranslated text: KEY=VALUE
+msgid "override-setting-arg"
+msgstr "SCHLÜSSEL=WERT"
+
+# Untranslated text: Overrides the value of the specified setting for this session. The overridden setting is not saved.
+msgid "override-setting-desc"
+msgstr ""
+"Überschreibt den Wert der angegebenen Einstellung für diese Sitzung. Die "
+"überschriebene Einstellung wird nicht gespeichert."
+
+# Untranslated text: FILE
+msgid "print-jobids-arg"
+msgstr "DATEI"
+
+# Untranslated text: Prints the job IDs of newly sent faxes to stdout or to the specified file. One job per line is printed, in the format \"yyyy-mm-dd hh:mm:ss NEW_FAXJOB jobid\".
+msgid "print-jobids-desc"
+msgstr ""
+"Gibt die Job-IDs neu gesendeter Faxe auf der Standardausgabe oder in der "
+"angegebenen Datei aus. Eine ID pro Zeile wird ausgegeben, im Format \"yyyy-"
+"mm-dd hh:mm:ss NEW_FAXJOB jobid\"."
+
+# Untranslated text: SERVER
+msgid "server-arg"
+msgstr "SERVER"
+
+# Untranslated text: Sets the server to send the fax. Specify either the server's name (e.g. \"My server\"), the server's list index (0 is the first element) or the ID in the form \"#ID\".
+msgid "server-desc"
+msgstr ""
+"Gibt den Server zum Senden des Faxes an. Geben Sie entweder den Namen des "
+"Servers an (z.B. \"Mein Server\"), den Listenindex des Servers (0 entspricht "
+"dem ersten Element) oder die ID in der Form \"#ID\"."
+
+# Untranslated text: IDENTITY
+msgid "identity-arg"
+msgstr "IDENTITÄT"
+
+# Untranslated text: Sets the sender identity to use when sending the fax. Specify either the identity's name (e.g. \"My identity\"), the identity's list index (0 is the first element) or the ID in the form \"#ID\".
+msgid "identity-desc"
+msgstr ""
+"Gibt die zum Senden des Faxes verwendete Identität an. Geben Sie entweder "
+"den Namen der Identität an (z.B. \"Meine Identität\"), den Listenindex der "
+"Identität (0 entspricht dem ersten Element) oder die ID in der Form \"#ID\"."

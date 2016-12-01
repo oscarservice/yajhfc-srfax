@@ -1,0 +1,66 @@
+# This file contains message IDs to translate standard Java Swing dialogs
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# English text: "Details"
+msgid "FileChooser.detailsViewButtonAccessibleName"
+msgstr ""
+
+# English text: "{0} GB"
+msgid "FileChooser.fileSizeGigaBytes"
+msgstr ""
+
+# English text: "{0} KB"
+msgid "FileChooser.fileSizeKiloBytes"
+msgstr ""
+
+# English text: "{0} MB"
+msgid "FileChooser.fileSizeMegaBytes"
+msgstr ""
+
+# English text: "Home"
+msgid "FileChooser.homeFolderAccessibleName"
+msgstr ""
+
+# English text: "List"
+msgid "FileChooser.listViewButtonAccessibleName"
+msgstr ""
+
+# English text: "New Folder"
+msgid "FileChooser.newFolderAccessibleName"
+msgstr ""
+
+# English text: ": "
+msgid "FileChooser.newFolderErrorSeparator"
+msgstr ""
+
+# English text: "NewFolder"
+msgid "FileChooser.other.newFolder"
+msgstr ""
+
+# English text: "NewFolder.{0}"
+msgid "FileChooser.other.newFolder.subsequent"
+msgstr ""
+
+# English text: "Up"
+msgid "FileChooser.upFolderAccessibleName"
+msgstr ""
+
+# English text: "View Menu"
+msgid "FileChooser.viewMenuButtonAccessibleName"
+msgstr ""
+
+# English text: "View Menu"
+msgid "FileChooser.viewMenuButtonToolTipText"
+msgstr ""
+
+# English text: "New Folder"
+msgid "FileChooser.win32.newFolder"
+msgstr ""
+
+# English text: "New Folder ({0})"
+msgid "FileChooser.win32.newFolder.subsequent"
+msgstr ""

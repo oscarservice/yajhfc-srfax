@@ -1,0 +1,415 @@
+<project name="YajHFC" default="dist" basedir=".">
+	<description>
+        YajHFC build file
+    </description>
+	<!-- set global properties for this build -->
+	<property name="src" location="."/>
+	<property name="jar-extra" location="jar"/>
+	<property name="build.compiler" value="modern"/>
+	<property name="build.sysclasspath" value="ignore"/>
+
+	<property file="build.properties"/>
+	<property name="gnu.hylafax-dir" location="../yajhfc-gnu-hylafax/target/classes"/>
+	<property name="build" location="build"/>
+	<property name="jar-output" location="${build}/yajhfc.jar"/>
+	<property name="srczip-output" location="${build}/yajhfc-src.zip"/>
+
+	<fileset dir="${gnu.hylafax-dir}" id="fs.gnu.hylafax-jar-core">
+		<filename name="lib/gnu-hylafax-core-*.jar"/>
+	</fileset>
+	<fileset dir="${gnu.hylafax-dir}" id="fs.gnu.hylafax-jar-inet-ftp">
+		<filename name="lib/gnu-hylafax-inet-ftp-*.jar"/>
+	</fileset>
+	<property name="gnu.hylafax-jar-core" refid="fs.gnu.hylafax-jar-core"/>
+	<property name="gnu.hylafax-jar-inet-ftp" refid="fs.gnu.hylafax-jar-inet-ftp"/>
+
+	<property name="jlfgr.jar" location="jar/jlfgr-1.0.jar"/>
+	<property name="tablelayout.jar" location="jar/TableLayout-bin-jdk1.5-2009-08-26.jar"/>
+	<property name="commons-logging.jar" location="jar/commons-logging-1.2.jar"/>
+	<property name="gson.jar" location="jar/gson-2.7.jar"/>
+	<property name="jna-dir" location="jar"/>
+	
+	<property name="exewrapper.config" location="launch4j/launch4j.cfg.xml"/>
+	<property name="exewrapper.target" location="${build}/yajhfc.exe"/>
+	<property name="exewrapper.printlaunch.config" location="launch4j/launch4j-printlaunch.cfg.xml"/>
+	<property name="exewrapper.printlaunch.target" location="${build}/yajhfc-printlaunch.exe"/>
+	<property name="launch4j.dir" location="D:/Repo/launch4j" />
+	<property name="gcc-win32.command" location="D:/Repo/bin/gcc" />
+	<property name="gcc-win32.sys-include" location="D:/Repo/include" />
+	
+	<property name="yajhfc.version" value="0.5.3" />
+    <pathconvert property="yajhfc.version.numeric" dirsep="" pathsep="" description="Make an all numeric version and assign value to new property">
+        <path path="${yajhfc.version}full999" />
+
+        <!--Pathconvert will try to add the root directory to the "path", so replace with empty string -->
+        <map from="${basedir}" to="" />
+
+    	<regexpmapper from="(\d+\.\d+\.\d+)[a-zA-Z]*(\d*)" to="\1.\2"/>
+    </pathconvert>
+
+	<target name="init">
+		<echo>YajHFC version: ${yajhfc.version}; numeric version: ${yajhfc.version.numeric}</echo>
+		
+		<available file="${gnu.hylafax-dir}/gnu/hylafax/HylaFAXClient.class" property="gnu.hylafax.haveClassDir"/>
+		<condition property="gnu.hylafax.haveJars">
+			<and>
+				<isfalse   value="${gnu.hylafax.haveClassDir}"/>
+				<available file="${gnu.hylafax-dir}/${gnu.hylafax-jar-core}"/>
+				<available file="${gnu.hylafax-dir}/${gnu.hylafax-jar-inet-ftp}"/>
+			</and>
+		</condition>
+
+
+		<fail message="gnu.hylafax library not found in path ${gnu.hylafax-dir}. Use build.properties to specify the correct path.">
+			<condition>
+				<not>
+					<or>
+						<istrue value="${gnu.hylafax.haveClassDir}"/>
+						<istrue value="${gnu.hylafax.haveJars}"/>
+					</or>
+				</not>
+			</condition>
+		</fail>
+
+		<fail message="jlfgr.jar not found at ${jlfgr.jar}. Use build.properties to specify the correct path.">
+			<condition>
+				<not>
+					<available file="${jlfgr.jar}" />
+				</not>
+			</condition>
+		</fail>
+		<fail message="tablelayout.jar not found at ${tablelayout.jar}. Use build.properties to specify the correct path.">
+			<condition>
+				<not>
+					<available file="${tablelayout.jar}" />
+				</not>
+			</condition>
+		</fail>
+		<fail message="commons-logging.jar not found at ${commons-logging.jar}. Use build.properties to specify the correct path.">
+			<condition>
+				<not>
+					<available file="${commons-logging.jar}" />
+				</not>
+			</condition>
+		</fail>
+		<fail message="jna.jar and/or platform.jar not found in ${jna-dir}. Use build.properties to specify the correct path.">
+			<condition>
+				<not>
+					<and>
+						<available file="${jna-dir}/jna.jar" />
+						<available file="${jna-dir}/platform.jar" />
+					</and>
+				</not>
+			</condition>
+		</fail>
+		
+		<!-- Create the time stamp -->
+		<tstamp/>
+		<!-- Create the build directory structure used by compile -->
+		<mkdir dir="${build}"/>
+		
+		<!-- Find out if we have valid, precompiled translations -->
+		<uptodate property="i18n.havePrecompiled">
+			<srcfiles dir="${src}/src/yajhfc/i18n/" includes="*_*.po,CommandLineOpts.po"/>
+			<compositemapper>
+				<mapper type="glob" from="m*.po" to="M*.class" />
+				<mapper type="glob" from="m*.po" to="M*$1.class" />
+				<mapper type="glob" from="CommandLine*.po" to="CommandLine*.properties" />
+<!--				<mapper type="glob" from="C*.po" to="C*.class" />
+				<mapper type="glob" from="C*.po" to="C*$1.class" /> -->
+			</compositemapper>
+		</uptodate>
+		
+		<!-- Find out if we need to recompile the exe wrapper -->
+	    <condition property="exewrapper.isUpToDate">
+	    	<and>
+	    		<uptodate>
+	    	  		<srcfiles dir="launch4j" includes="*cfg.xml"/>
+	    	 	 	<mapper type="glob" from="launch4j*.cfg.xml" to="${build}/yajhfc*.exe" />
+	    		</uptodate>
+	    		<uptodate>
+					<srcfiles dir="launch4j/hook" includes="*.c"/>
+					<mapper type="glob" from="*.c" to="bin/*.o" />
+	    		</uptodate>
+	    		<uptodate>
+					<srcfiles dir="launch4j/hook/bin" includes="*.o"/>
+	    			<mergemapper to="${build}/yajhfc.exe"/>
+	    		</uptodate>
+	    	</and>
+	    </condition>
+
+		<condition property="gnu.hylafax.classFileLocation" value="${gnu.hylafax-dir}" else="${build}/gnu.hylafax">
+			<istrue value="${gnu.hylafax.haveClassDir}"/>
+		</condition>
+	</target>
+	
+	<target name="unjar-gnu-hylafax" depends="init" if="gnu.hylafax.haveJars">
+		<mkdir dir="${gnu.hylafax.classFileLocation}"/>
+		<unjar src="${gnu.hylafax-dir}/${gnu.hylafax-jar-core}" dest="${gnu.hylafax.classFileLocation}">
+			<patternset>
+				<include name="**/*.class"/>
+			</patternset>
+		</unjar>
+		<unjar src="${gnu.hylafax-dir}/${gnu.hylafax-jar-inet-ftp}" dest="${gnu.hylafax.classFileLocation}">
+			<patternset>
+				<include name="**/*.class"/>
+			</patternset>
+		</unjar>
+	</target>
+
+	<target name="unjar-dependencies" depends="init,unjar-gnu-hylafax" description="unzip the jars we depend on" >
+		<unjar src="${tablelayout.jar}" dest="${build}/jar">
+		    <patternset>
+		        <include name="info/clearthought/**"/>
+		    </patternset>
+		</unjar>
+		<unjar src="${jlfgr.jar}" dest="${build}/jar">
+		    <patternset>
+		        <include name="toolbarButtonGraphics/**/*16.gif"/>
+		    </patternset>
+		</unjar>
+		<unjar src="${commons-logging.jar}" dest="${build}/jar">
+		    <patternset>
+		        <include name="org/**"/>
+		    </patternset>
+		</unjar>
+		<unjar src="${gson.jar}" dest="${build}/jar">
+		    <patternset>
+		        <include name="com/**"/>
+		    </patternset>
+		</unjar>
+		<unjar src="jar/commons-lang3-3.4.jar" dest="${build}/jar">
+		    <patternset>
+		        <include name="org/**"/>
+		    </patternset>
+		</unjar>
+		<unjar src="jar/commons-io-2.5.jar" dest="${build}/jar">
+		    <patternset>
+		        <include name="org/**"/>
+		    </patternset>
+		</unjar>
+	</target>
+
+	<target name="compile" depends="init,unjar-dependencies" description="compile the source code" >
+		<!-- Compile the java code from ${src} into ${build} -->
+		<javac srcdir="${src}/src" includes="yajhfc/**/*.java,gnu/**/*.java" destdir="${build}" source="1.5" target="1.5" encoding="utf-8" debug="true" debuglevel="lines,source">
+			<classpath>
+				<pathelement path="${classpath}"/>
+				<pathelement location="${gnu.hylafax.classFileLocation}"/>
+				<pathelement location="${jar-extra}"/>
+				<pathelement location="${build}/jar"/>
+			</classpath>
+		</javac>
+
+		<!-- the parts of the source code only Java 6 compatible -->
+		<javac srcdir="${src}/java6-src" includes="yajhfc/**/*.java" destdir="${build}" source="1.5" target="1.6" encoding="utf-8" debug="true" debuglevel="lines,source">
+			<classpath>
+				<pathelement path="${classpath}"/>
+				<pathelement location="${gnu.hylafax.classFileLocation}"/>
+				<pathelement location="${jar-extra}"/>
+				<pathelement location="${build}"/>
+				<pathelement location="${build}/jar"/>
+			</classpath>
+		</javac>
+
+		
+		<!-- the parts of the source code depending on JNA (optional)-->
+		<javac srcdir="${src}/jna-src" includes="yajhfc/**/*.java" destdir="${build}" source="1.5" target="1.5" encoding="utf-8" debug="true" debuglevel="lines,source">
+			<classpath>
+				<pathelement path="${classpath}"/>
+				<pathelement location="${gnu.hylafax.classFileLocation}"/>
+				<pathelement location="${jar-extra}"/>
+				<pathelement location="${build}/jar"/>
+				<pathelement location="${jna-dir}/jna.jar"/>
+				<pathelement location="${jna-dir}/platform.jar"/>
+			</classpath>
+		</javac>
+
+		<!-- the parts of the source code compatible to Java 1.1-->
+		<javac srcdir="${src}/java1-src" includes="yajhfc/**/*.java" destdir="${build}" source="1.3" target="1.1" encoding="utf-8" debug="true" debuglevel="lines,source">
+			<classpath>
+				<pathelement path="${classpath}"/>
+				<pathelement location="${jar-extra}"/>
+				<!-- the Java 1.1 source may only depend on the JDK (and especially on no Java 5 code) -->
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="compile-mac" depends="compile" description="compile the Mac OS X specific source code" >
+			<!-- Compile the java code from ${src} into ${build} -->
+			<javac srcdir="${src}/mac-src" includes="**/*.java" destdir="${src}/mac-src" source="1.5" target="1.5" encoding="utf-8" debug="true" debuglevel="lines,source">
+				<classpath>
+					<pathelement path="${classpath}"/>
+					<pathelement location="${gnu.hylafax.classFileLocation}"/>
+					<pathelement location="${jar-extra}"/>
+					<pathelement location="${build}"/>
+					<pathelement location="${build}/jar"/>
+				</classpath>
+			</javac>
+	</target>
+
+	<property environment="env" />
+	<taskdef 
+		name="bundleapp" 
+		classname="com.oracle.appbundler.AppBundlerTask" 
+		classpath="jar/appbundler-1.0.jar" />
+	<target name="bundle">
+		<bundleapp 
+			outputdirectory="build" 
+			icon="launch4j/yajhfc.icns"
+			name="Yet another Java HylaFAX client" 
+			displayname="YajHFC" 
+			identifier="yajhfc" 
+			shortversion="0.6.2"
+			applicationCategory="public.app-category.developer-tools"
+			mainclassname="yajhfc.YajHFC">
+			<classpath file="build/yajhfc.jar" />
+			<runtime dir="${env.JAVA_HOME}" />
+		</bundleapp>
+	</target>
+
+	<!--
+	<target name="i18n" depends="init" description="Compiles and/or copies the translations">
+		<antcall target="i18n.msgfmt"/>
+		<antcall target="i18n.copy"/>
+	</target>
+
+	<target name="i18n.copy">
+		<mkdir dir="${build}/yajhfc/i18n"/>
+		<copy todir="${build}/yajhfc/i18n">
+			<fileset dir="${src}/yajhfc/i18n/" includes="*.class"/>
+		</copy>
+	</target>
+	-->
+	
+	<target name="compile-l4j-hook" depends="init" description="compile the launch4j hook" >
+		
+		<mkdir dir="launch4j/hook/bin"/>
+		
+		<!-- Compile our custom header hook -->
+		<apply executable="${gcc-win32.command}" dir="launch4j/hook" parallel="false" dest="launch4j/hook/bin" verbose="true">
+			
+			<arg value="-c"/>
+			<srcfile/>
+			<arg value="-o"/>
+			<targetfile/>
+			<arg value="-I${gcc-win32.sys-include}"/>
+			<arg value="-I${launch4j.dir}/head_src"/>
+			<arg value="-O2"/>
+			<arg value="-Wall"/>
+			
+			<fileset dir="launch4j/hook" includes="*.c"/>
+			<mapper type="glob" from="*.c" to="*.o" />
+		</apply>
+		<apply executable="${gcc-win32.command}" dir="launch4j/hook" parallel="false" dest="launch4j/hook/bin" verbose="true">
+			
+			<arg value="-c"/>
+			<srcfile/>
+			<arg value="-o"/>
+			<targetfile/>
+			<arg value="-I${gcc-win32.sys-include}"/>
+			<arg value="-I${launch4j.dir}/head_src"/>
+			<arg value="-O2"/>
+			<arg value="-Wall"/>
+			<arg value="-DPRINTLAUNCH"/>
+			
+			<fileset dir="launch4j/hook" includes="*.c"/>
+			<mapper type="glob" from="*.c" to="*-printlaunch.o" />
+		</apply>
+	</target>
+
+	<target name="exewrapper" depends="compile,compile-l4j-hook" description="generate the exe wrapper for Windows" unless="exewrapper.isUpToDate">
+		<taskdef name="launch4j"
+		    classname="net.sf.launch4j.ant.Launch4jTask"
+		    classpath="${launch4j.dir}/launch4j.jar
+		        :${launch4j.dir}/lib/xstream.jar" />
+		
+		<launch4j configFile="${exewrapper.config}" outfile="${exewrapper.target}" 
+			fileVersion="${yajhfc.version.numeric}" productVersion="${yajhfc.version.numeric}"
+			txtFileVersion="${yajhfc.version}"      txtProductVersion="${yajhfc.version}" />
+		<launch4j configFile="${exewrapper.printlaunch.config}" outfile="${exewrapper.printlaunch.target}" 
+			fileVersion="${yajhfc.version.numeric}" productVersion="${yajhfc.version.numeric}"
+			txtFileVersion="${yajhfc.version}"      txtProductVersion="${yajhfc.version}" />
+	</target>
+	
+	<target name="i18n" unless="i18n.havePrecompiled" depends="init" description="compile the translations">
+		<exec executable="/bin/sh" dir="${src}/src/yajhfc/i18n/" osfamily="unix">
+			<arg value="./fmtall.sh"/>
+		</exec>
+	</target>
+		
+	<target name="merge-po" description="Run xgettext and merge po files">	
+		<exec executable="/bin/sh" dir="${src}/src/yajhfc/i18n/" osfamily="unix">
+			<arg value="./mergeall.sh"/>
+		</exec>
+	</target>
+
+	<target name="dist" depends="compile,i18n,doc" description="generate the distribution" >
+		<jar jarfile="${jar-output}" manifest="${src}/src/MANIFEST.MF">
+			<fileset dir="${build}" includes="yajhfc/**,gnu/**,au/**"/>
+			<fileset dir="${src}/src" includes="yajhfc/i18n/*.class,**/*.properties"/>
+			<fileset dir="${src}/mac-src" includes="yajhfc/**/*.class"/>
+			<fileset dir="${jar-extra}"/>
+			<fileset dir="${build}/jar"/>
+			<fileset dir="${gnu.hylafax.classFileLocation}" includes="**/*.class"/>
+			<fileset dir="${src}" includes="COPYING,LICENSE,README*.txt,doc/*.html,doc/*.css,doc/*.png"/>
+			<fileset dir="${src}/src" includes="yajhfc/*.png,yajhfc/images/*,yajhfc/faxcover/*.html"/>
+		</jar>
+	</target>
+	
+	<target name="sourcedist" depends="init,i18n,doc,compile-l4j-hook" description="generate the source distribution" >
+		<zip destfile="${srczip-output}">
+			<zipfileset dir="${src}" prefix="yajhfc/">
+				<exclude name="bin/"/>
+				<exclude name="build/"/>
+				<exclude name="**/*.jar"/>
+				<exclude name="doc/faq-src/*"/>
+				<exclude name="**/*.log"/>
+				<exclude name="**/*~"/>
+				<exclude name="**/.hg/**"/>
+			</zipfileset>
+			<zipfileset dir="${src}" prefix="yajhfc/">
+				<include name="doc/faq-src/.latex2html-init"/>
+				<include name="doc/faq-src/*.tex"/>
+				<include name="doc/faq-src/*.sh"/>
+			</zipfileset>
+		</zip>
+	</target>
+
+	<target name="doc" depends="init" description="generate the documentation">
+		<!-- Find out if we have valid, precompiled docs -->
+		<uptodate property="doc.faq.havePrecompiled">
+			<srcfiles dir="${src}/doc/" includes="faq-src/*.tex"/>
+			<compositemapper>
+				<mapper type="glob" from="faq-src/*.tex" to="*.pdf" />
+				<mapper type="glob" from="faq-src/*.tex" to="*.html" />
+			</compositemapper>
+		</uptodate>
+		<antcall target="doc.faq"/>
+	</target>
+
+	<target name="doc.faq" unless="doc.faq.havePrecompiled">
+		<exec executable="/bin/sh" dir="${src}/doc/faq-src/" osfamily="unix">
+			<arg value="./buildfaq.sh"/>
+		</exec>
+	</target>
+
+	<target name="fulldist" depends="dist,sourcedist,exewrapper" description="generate both source and binary distributions"/>
+
+	<target name="clean" description="clean up" >
+		<!-- Delete the ${build} directory tree and the jar file -->
+		<delete dir="${build}"/>
+		<delete file="${jar-output}"/>
+	</target>
+	
+	<target name="run-test" depends="dist" description="run yajhfc with empty configuration">
+		<delete dir="${java.io.tmpdir}/yajhfc-test-run"/>
+		<echo>
+Running YajHFC with configdir ${java.io.tmpdir}/yajhfc-test-run ...
+		</echo>
+		<java spawn="yes" fork="yes" jar="${jar-output}">
+			<arg value="--configdir"/>
+			<arg value="${java.io.tmpdir}/yajhfc-test-run"/>
+		</java>
+	</target>
+</project>
